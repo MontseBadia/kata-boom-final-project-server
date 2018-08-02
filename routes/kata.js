@@ -57,7 +57,10 @@ router.post('/:id/check', (req, res, next) => {
           isCorrect = true;
         };
       });
+
       console.log(isCorrect);
+
+      res.status(200).json(isCorrect);
     })
     .catch(next);
 });

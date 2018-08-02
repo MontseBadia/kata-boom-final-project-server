@@ -35,11 +35,11 @@ const katas = [
     tests: [
       {
         params: [1, 2, 3],
-        result: '6'
+        result: 6
       },
       {
         params: [2, 5, 2],
-        result: '9'
+        result: 9
       }]
   }
 ];

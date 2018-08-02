@@ -22,7 +22,7 @@ const kataSchema = new Schema({
       Mixed
     ],
     result: {
-      type: String,
+      type: Mixed,
       required: true
     }
   }]
