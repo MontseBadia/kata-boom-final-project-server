@@ -16,7 +16,7 @@ const app = express();
 // ------ DB CONNECTION -------
 
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/database-name', {
+mongoose.connect('mongodb://localhost/kata-boom', {
   keepAlive: true,
   reconnectTries: Number.MAX_VALUE
 });
