@@ -15,7 +15,7 @@ Kata.collection.drop();
 
 const katas = [
   {
-    name: 'Reverse A String',
+    name: 'reverse-a-string',
     functionName: 'reverseString',
     description: 'Create a function that will reverse a string. Your final answer must also be a string.',
     tests: [
@@ -29,7 +29,7 @@ const katas = [
       }]
   },
   {
-    name: 'Sum Three Numbers',
+    name: 'sum-three-numbers',
     functionName: 'sumThreeNumbers',
     description: 'Create a function that will sum three numbers. Your final answer must also be a number.',
     tests: [
