@@ -2,6 +2,12 @@
 
 const express = require('express');
 const router = express.Router();
+const { VM } = require('vm2');
+const vm = new VM({ // Run input code in virtual machine
+  require: {
+    external: true
+  }
+});
 
 const Kata = require('../models/kata');
 
@@ -54,10 +60,12 @@ router.post('/:id/check', (req, res, next) => {
       for (let x = 0; x < result.length; x++) {
         if (typeof (params[0][0]) === 'string') { // why is params[0] an array of objects?
           functionCall.push(functionName + '(' + '"' + params[x] + '"' + ')');
-          evaluation.push(eval(inputCode + functionCall[x]));
+          evaluation.push(vm.run(inputCode + functionCall[x]));
+          // evaluation.push(eval(inputCode + functionCall[x]));
         } else {
           functionCall.push(functionName + '(' + params[x] + ')');
-          evaluation.push(eval(inputCode + functionCall[x])); // Verbessern!
+          evaluation.push(vm.run(inputCode + functionCall[x]));
+          // evaluation.push(eval(inputCode + functionCall[x])); // Verbessern!
         }
       }
 
@@ -68,8 +76,6 @@ router.post('/:id/check', (req, res, next) => {
           isCorrect = true;
         };
       });
-
-      console.log(isCorrect);
 
       res.status(200).json(isCorrect);
     })
