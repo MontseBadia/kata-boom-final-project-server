@@ -17,6 +17,12 @@
         "semi": [
             "error",
             "always"
+        ],
+        "no-eval": [
+            "error",
+            {
+                "allowIndirect": true
+            }
         ]
     }
 }
