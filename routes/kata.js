@@ -18,6 +18,16 @@ router.get('/random', (req, res, next) => {
     .catch(next); // is it ok?
 });
 
+// --- GET ONE KATA ------
+router.get('/:name', (req, res, next) => {
+  const kataName = req.params.name;
+  Kata.findOne({ name: kataName })
+    .then((kata) => {
+      return res.json(kata);
+    })
+    .catch(next);
+});
+
 router.post('/:id/check', (req, res, next) => {
   const kataId = req.params.id;
   const inputCode = req.body.inputCode;
