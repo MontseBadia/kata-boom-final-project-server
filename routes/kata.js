@@ -62,7 +62,10 @@ router.post('/:id/check', (req, res, next) => {
 
       res.status(200).json(isCorrect);
     })
-    .catch(next);
+    .catch(err => {
+      res.status(500).json({ code: 'unexpected-identifier' });
+      next(err); // do I need next ?
+    });
 });
 
 module.exports = router;
