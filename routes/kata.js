@@ -7,23 +7,24 @@ const Kata = require('../models/kata');
 
 // --- GET RANDOM KATA ------
 router.get('/random', (req, res, next) => {
-  Kata.count().exec((err, count) => {
-    if (err) {
-      return res.json(err).status(500); // ok?
-    }
-    const random = Math.floor(Math.random() * count);
-    Kata.findOne().skip(random).exec((err, kata) => {
-      if (err) {
-        return res.json(err).status(500);
-      }
+  Kata.count()
+    .then((count) => {
+      const random = Math.floor(Math.random() * count);
+      return Kata.findOne().skip(random);
+    })
+    .then((kata) => {
       return res.json(kata);
-    });
-  });
+    })
+    .catch(next); // is it ok?
 });
 
 router.post('/:id/check', (req, res, next) => {
   const kataId = req.params.id;
   const inputCode = req.body.inputCode;
+
+  if (!inputCode) {
+    return res.status(422).json({ code: 'no-input-provided' }); // 422 is fine?
+  }
 
   Kata.findById(kataId)
     .then((kata) => {
