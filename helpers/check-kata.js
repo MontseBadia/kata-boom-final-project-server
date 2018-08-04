@@ -43,7 +43,12 @@ function checkKata (kata, inputCode) {
     };
   });
 
-  return isCorrect;
+  const data = {
+    isCorrect: isCorrect,
+    evaluation: evaluation
+  };
+
+  return data;
 }
 
 module.exports = checkKata;

@@ -49,8 +49,8 @@ router.post('/:id/check', isKataIdValid, (req, res, next) => { // Do I need to c
 
   Kata.findById(kataId)
     .then((kata) => {
-      const isCorrect = checkKata(kata, inputCode);
-      res.status(200).json(isCorrect);
+      const data = checkKata(kata, inputCode);
+      res.status(200).json(data);
     })
     .catch(() => {
       return res.status(422).json({ code: 'unexpected-identifier' }); // Is 422 ok?
