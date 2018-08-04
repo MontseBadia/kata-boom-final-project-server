@@ -21,19 +21,19 @@ const katas = [
     description: 'Create a function that will reverse a string. Your final answer must also be a string.',
     tests: [
       {
-        params: ['hello'],
+        params: ['"hello"'],
         result: 'olleh'
       },
       {
-        params: ['barcelona'],
+        params: ['"barcelona"'],
         result: 'anolecrab'
       },
       {
-        params: ['laCiudadCondal'],
+        params: ['"laCiudadCondal"'],
         result: 'ladnoCdaduiCal'
       },
       {
-        params: ['%-te-YO-789/&..p'],
+        params: ['"%-te-YO-789/&..p"'],
         result: 'p..&/987-OY-et-%'
       }]
   },
@@ -58,6 +58,52 @@ const katas = [
       {
         params: [765, 80, 3414],
         result: 4259
+      }]
+  },
+  {
+    name: 'vowel-count',
+    functionName: 'vowelCount',
+    parameters: ['string'],
+    description: 'Return the number (count) of vowels (a, e, i, o, u) in the given string.',
+    tests: [
+      {
+        params: ['"abracadabra"'],
+        result: 5
+      },
+      {
+        params: ['"underscore"'],
+        result: 4
+      },
+      {
+        params: ['"tomorrow"'],
+        result: 3
+      },
+      {
+        params: ['"murcielago"'],
+        result: 5
+      }]
+  },
+  {
+    name: 'compare-strings-by-sum-of-chars',
+    functionName: 'compareStrings',
+    parameters: ['string1', 'string2'],
+    description: 'Compare two strings by comparing the sum of their values (ASCII character code). Your method should return true, if the strings are equal and false if they are not equal.',
+    tests: [
+      {
+        params: ['"ad"', '"bc"'],
+        result: true
+      },
+      {
+        params: ['"ads"', '"dds"'],
+        result: false
+      },
+      {
+        params: ['"kl"', '"lz"'],
+        result: false
+      },
+      {
+        params: ['"gtre"', '"gtre"'],
+        result: true
       }]
   }
 ];

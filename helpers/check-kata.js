@@ -23,15 +23,8 @@ function checkKata (kata, inputCode) {
   });
 
   for (let x = 0; x < result.length; x++) {
-    if (typeof (params[0][0]) === 'string') {
-      functionCall.push(functionName + '(' + '"' + params[x] + '"' + ')');
-      evaluation.push(vm.run(inputCode + functionCall[x]));
-      // evaluation.push(eval(inputCode + functionCall[x]));
-    } else {
-      functionCall.push(functionName + '(' + params[x] + ')');
-      evaluation.push(vm.run(inputCode + functionCall[x]));
-      // evaluation.push(eval(inputCode + functionCall[x])); // Verbessern!
-    }
+    functionCall.push(functionName + '(' + params[x] + ')');
+    evaluation.push(vm.run(inputCode + functionCall[x]));
   }
 
   evaluation.forEach((item, index) => {
