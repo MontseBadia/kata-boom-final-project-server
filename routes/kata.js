@@ -2,14 +2,9 @@
 
 const express = require('express');
 const router = express.Router();
-const { VM } = require('vm2');
-const vm = new VM({ // Run input code in virtual machine
-  require: {
-    external: true
-  }
-});
 
-const isKataIdValid = require('../middlewares/isKataIdValid');
+const isKataIdValid = require('../middlewares/is-kata-id-valid');
+const checkKata = require('../helpers/check-kata');
 const Kata = require('../models/kata');
 
 // --- GET RANDOM KATA ------
@@ -54,41 +49,7 @@ router.post('/:id/check', isKataIdValid, (req, res, next) => { // Do I need to c
 
   Kata.findById(kataId)
     .then((kata) => {
-      const functionName = kata.functionName;
-      const tests = kata.tests;
-      const params = [];
-      const result = [];
-      const functionCall = [];
-      const evaluation = [];
-      let counter = 0;
-      let isCorrect = false;
-
-      tests.forEach(test => {
-        params.push(test.params);
-        result.push(test.result);
-      });
-
-      for (let x = 0; x < result.length; x++) {
-        if (typeof (params[0][0]) === 'string') {
-          functionCall.push(functionName + '(' + '"' + params[x] + '"' + ')');
-          evaluation.push(vm.run(inputCode + functionCall[x]));
-          // evaluation.push(eval(inputCode + functionCall[x]));
-        } else {
-          functionCall.push(functionName + '(' + params[x] + ')');
-          evaluation.push(vm.run(inputCode + functionCall[x]));
-          // evaluation.push(eval(inputCode + functionCall[x])); // Verbessern!
-        }
-      }
-
-      evaluation.forEach((item, index) => {
-        if (item === result[index]) {
-          counter++;
-        }
-        if (counter === result.length) {
-          isCorrect = true;
-        };
-      });
-
+      const isCorrect = checkKata(kata, inputCode);
       res.status(200).json(isCorrect);
     })
     .catch(() => {
