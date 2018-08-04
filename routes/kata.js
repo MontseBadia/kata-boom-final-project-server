@@ -19,6 +19,9 @@ router.get('/random', (req, res, next) => {
       return Kata.findOne().skip(random);
     })
     .then((kata) => {
+      if (!kata) {
+        return res.status(404).json(new Error('404'));
+      }
       return res.json(kata);
     })
     .catch(next); // is it ok?
@@ -29,9 +32,14 @@ router.get('/:name', (req, res, next) => {
   const kataName = req.params.name;
   Kata.findOne({ name: kataName })
     .then((kata) => {
+      if (!kata) {
+        return res.status(404).json(new Error('404'));
+      }
       return res.json(kata);
     })
-    .catch(next);
+    .catch((err) => {
+      return res.status(500).json(err); // is it ok?
+    });
 });
 
 router.post('/:id/check', (req, res, next) => {
