@@ -16,6 +16,7 @@ function checkKata (kata, inputCode) {
   const evaluation = [];
   let counter = 0;
   let isCorrect = false;
+  const finalStatus = [];
 
   tests.forEach(test => {
     params.push(test.params);
@@ -29,7 +30,10 @@ function checkKata (kata, inputCode) {
 
   evaluation.forEach((item, index) => {
     if (item === result[index]) {
+      finalStatus.push('CORRECT');
       counter++;
+    } else {
+      finalStatus.push('INCORRECT');
     }
     if (counter === result.length) {
       isCorrect = true;
@@ -38,7 +42,8 @@ function checkKata (kata, inputCode) {
 
   const data = {
     isCorrect: isCorrect,
-    evaluation: evaluation
+    evaluation: evaluation,
+    finalStatus: finalStatus
   };
 
   return data;
