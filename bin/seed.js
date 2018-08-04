@@ -17,6 +17,7 @@ const katas = [
   {
     name: 'reverse-a-string',
     functionName: 'reverseString',
+    parameters: ['string'],
     description: 'Create a function that will reverse a string. Your final answer must also be a string.',
     tests: [
       {
@@ -26,11 +27,20 @@ const katas = [
       {
         params: ['barcelona'],
         result: 'anolecrab'
+      },
+      {
+        params: ['laCiudadCondal'],
+        result: 'ladnoCdaduiCal'
+      },
+      {
+        params: ['%-te-YO-789/&..p'],
+        result: 'p..&/987-OY-et-%'
       }]
   },
   {
     name: 'sum-three-numbers',
     functionName: 'sumThreeNumbers',
+    parameters: ['num1', 'num2', 'num3'],
     description: 'Create a function that will sum three numbers. Your final answer must also be a number.',
     tests: [
       {
@@ -40,6 +50,14 @@ const katas = [
       {
         params: [2, 5, 2],
         result: 9
+      },
+      {
+        params: [4589064, 6940, 990],
+        result: 4596994
+      },
+      {
+        params: [765, 80, 3414],
+        result: 4259
       }]
   }
 ];

@@ -13,6 +13,10 @@ const kataSchema = new Schema({
     type: String,
     required: true
   },
+  parameters: {
+    type: [String],
+    required: true
+  },
   description: {
     type: String,
     required: true

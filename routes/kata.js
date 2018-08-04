@@ -18,7 +18,7 @@ router.get('/random', (req, res, next) => {
       if (!kata) {
         return res.status(404).json(new Error('404'));
       }
-      return res.json(kata);
+      return res.json(kata.name);
     })
     .catch(next); // is it ok?
 });
