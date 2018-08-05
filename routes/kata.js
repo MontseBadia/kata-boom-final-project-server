@@ -6,21 +6,38 @@ const router = express.Router();
 const isKataIdValid = require('../middlewares/is-kata-id-valid');
 const checkKata = require('../helpers/check-kata');
 const Kata = require('../models/kata');
+const User = require('../models/user');
 
 // --- GET RANDOM KATA ------
 router.get('/random', (req, res, next) => {
+  const currentUserId = req.session.currentUser._id;
+  var userKatas = [];
+
   if (!req.session.currentUser) {
     return res.status(401).json({ code: 'unauthorized' }); // Does every response need a return??
   }
 
-  Kata.count()
+  User.findById(currentUserId)
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ code: 'not-found' });
+      }
+      user.katas.forEach((item) => {
+        userKatas.push(item.kata);
+      });
+      return Kata.count();
+    })
     .then((count) => {
-      const random = Math.floor(Math.random() * count);
-      return Kata.findOne().skip(random);
+      if (count === userKatas.length) {
+        return res.status(204).json({ code: 'no-more-katas' });
+      };
+      count = count - userKatas.length;
+      let random = Math.floor(Math.random() * count);
+      return Kata.findOne({ _id: { $nin: userKatas } }).skip(random);
     })
     .then((kata) => {
       if (!kata) {
-        return res.status(404).json(new Error('404')); // Do I need new Error here?
+        return res.status(404).json({ code: 'not-found' });
       }
       return res.json(kata.name);
     })
