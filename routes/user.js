@@ -36,4 +36,25 @@ router.post('/me/katas', (req, res, next) => { // check kataId?
     .catch(next);
 });
 
+// --- GET USER KATAS ------
+router.get('/me/katas', (req, res, next) => { // check kataId?
+  const currentUserId = req.session.currentUser._id;
+
+  if (!req.session.currentUser) {
+    return res.status(401).json({ code: 'unauthorized' });
+  }
+
+  User.findById(currentUserId).populate('katas.kata')
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ code: 'not-found' });
+      }
+      const katas = {
+        katas: user.katas
+      };
+      return res.json(katas);
+    })
+    .catch(next);
+});
+
 module.exports = router;
