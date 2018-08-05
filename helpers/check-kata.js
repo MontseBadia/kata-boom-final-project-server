@@ -40,6 +40,16 @@ function checkKata (kata, inputCode) {
     };
   });
 
+  for (let x = 0; x < evaluation.length; x++) { // Why do all these values pass to the front as null??
+    if (evaluation[x] === null) {
+      evaluation[x] = 'null';
+    } else if (evaluation[x] === undefined) {
+      evaluation[x] = 'undefined';
+    } else if (isNaN(evaluation[x]) && typeof (evaluation[x]) === 'number') {
+      evaluation[x] = 'NaN';
+    }
+  }
+
   const data = {
     isCorrect: isCorrect,
     evaluation: evaluation,
