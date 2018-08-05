@@ -11,6 +11,7 @@ const MongoStore = require('connect-mongo')(session);
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const kataRouter = require('./routes/kata');
+const userRouter = require('./routes/user');
 
 const app = express();
 
@@ -56,6 +57,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/kata', kataRouter);
+app.use('/user', userRouter);
 
 // ------ ERROR HANDLER -------
 
