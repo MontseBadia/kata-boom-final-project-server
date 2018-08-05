@@ -10,7 +10,7 @@ const Kata = require('../models/kata');
 // --- GET RANDOM KATA ------
 router.get('/random', (req, res, next) => {
   if (!req.session.currentUser) {
-    return res.status(401).json({ code: 'unauthorized' });
+    return res.status(401).json({ code: 'unauthorized' }); // Does every response need a return??
   }
 
   Kata.count()
@@ -63,7 +63,7 @@ router.post('/:id/check', isKataIdValid, (req, res, next) => { // Do I need to c
   Kata.findById(kataId)
     .then((kata) => {
       const data = checkKata(kata, inputCode);
-      res.status(200).json(data);
+      return res.status(200).json(data);
     })
     .catch(() => {
       return res.status(422).json({ code: 'unexpected-identifier' }); // Is 422 ok? How to I include the 500 here?

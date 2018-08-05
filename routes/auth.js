@@ -6,15 +6,11 @@ const router = express.Router();
 
 const User = require('../models/user');
 
-router.get('/', (req, res, next) => {
-  res.json({ 'ok': 'whatever' }); // Change
-});
-
 router.get('/me', (req, res, next) => {
   if (req.session.currentUser) {
-    res.json(req.session.currentUser);
+    return res.json(req.session.currentUser);
   } else {
-    res.status(404).json({ code: 'not-found' });
+    return res.status(404).json({ code: 'not-found' });
   }
 });
 
@@ -74,15 +70,19 @@ router.post('/signup', (req, res, next) => {
       return newUser.save()
         .then(() => {
           req.session.currentUser = newUser;
-          res.json(newUser);
+          return res.json(newUser);
         });
     })
     .catch(next);
 });
 
 router.post('/logout', (req, res) => {
-  req.session.currentUser = null;
-  return res.status(204).send();
+  if (!req.session.currentUser) {
+    return res.status(404).json({ code: 'not-found' });
+  } else {
+    req.session.currentUser = null;
+    return res.status(204).send();
+  }
 });
 
 module.exports = router;
