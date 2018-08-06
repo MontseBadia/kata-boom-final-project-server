@@ -84,7 +84,13 @@ router.post('/add/:userId', (req, res, next) => {
     return res.status(401).json({ code: 'unauthorized' });
   }
 
-  User.findByIdAndUpdate(currentUserId, { $push: { 'friends': userId } })
+  User.find({ $and: [{ _id: currentUserId }, { friends: { $nin: [userId] } }] }) // makes sure friend does not exist
+    .then((user) => {
+      if (user.length === 0) {
+        return res.status(404).json({ code: 'friend-already-exists' });
+      }
+      return User.findByIdAndUpdate(currentUserId, { $push: { friends: userId } });
+    })
     .then((user) => {
       if (!user) {
         return res.status(404).json({ code: 'not-found' });
