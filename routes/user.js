@@ -121,4 +121,26 @@ router.get('/me/friends', (req, res, next) => {
     .catch(next);
 });
 
+// // --- GET KATA SOLUTION ------
+// router.get('/me/katas/:id/edit', (req, res, next) => {
+//   const currentUserId = req.session.currentUser._id;
+//   const kataId = req.params.id;
+
+//   if (!req.session.currentUser) {
+//     return res.status(401).json({ code: 'unauthorized' });
+//   }
+
+//   User.findById(currentUserId).populate('katas.kata')
+//     .then((user) => {
+//       if (!user) {
+//         return res.status(404).json({ code: 'not-found' });
+//       }
+//       const katas = {
+//         katas: user.katas
+//       };
+//       return res.json(katas);
+//     })
+//     .catch(next);
+// });
+
 module.exports = router;
