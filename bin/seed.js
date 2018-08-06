@@ -123,7 +123,7 @@ Kata.create(katas)
       },
       {
         username: 'sebastian',
-        password: bcrypt.hashSync('laura', salt).toString()
+        password: bcrypt.hashSync('sebastian', salt).toString()
       }
     ];
 
