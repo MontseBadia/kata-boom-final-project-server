@@ -25,21 +25,21 @@ router.get('/random', (req, res, next) => {
       user.katas.forEach((item) => {
         userKatas.push(item.kata);
       });
-      return Kata.count();
-    })
-    .then((count) => {
-      if (count === userKatas.length) {
-        return res.status(204).json({ code: 'no-more-katas' });
-      };
-      count = count - userKatas.length;
-      let random = Math.floor(Math.random() * count);
-      return Kata.findOne({ _id: { $nin: userKatas } }).skip(random);
-    })
-    .then((kata) => {
-      if (!kata) {
-        return res.status(404).json({ code: 'not-found' });
-      }
-      return res.json(kata.name);
+      return Kata.count()
+        .then((count) => {
+          if (count === userKatas.length) {
+            return res.status(204).json({ code: 'no-more-katas' });
+          };
+          count = count - userKatas.length;
+          let random = Math.floor(Math.random() * count);
+          Kata.findOne({ _id: { $nin: userKatas } }).skip(random)
+            .then((kata) => {
+              if (!kata) {
+                return res.status(404).json({ code: 'not-found' });
+              }
+              return res.json(kata.name);
+            });
+        });
     })
     .catch(next); // is it ok?
 });
