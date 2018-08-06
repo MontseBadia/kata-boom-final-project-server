@@ -75,4 +75,23 @@ router.get('/search/:name', (req, res, next) => {
     .catch(next);
 });
 
+// --- ADD A FRIEND ------
+router.post('/add/:userId', (req, res, next) => {
+  const currentUserId = req.session.currentUser._id;
+  const userId = req.params.userId;
+
+  if (!req.session.currentUser) {
+    return res.status(401).json({ code: 'unauthorized' });
+  }
+
+  User.findByIdAndUpdate(currentUserId, { $push: { 'friends': userId } })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ code: 'not-found' });
+      }
+      return res.json(user);
+    })
+    .catch(next);
+});
+
 module.exports = router;

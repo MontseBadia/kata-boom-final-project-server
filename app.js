@@ -25,15 +25,10 @@ mongoose.connect('mongodb://localhost/kata-boom', {
 
 // ------ MIDDLEWARES -------
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(cors({
   credentials: true,
   origin: ['http://localhost:4200']
 }));
-
 app.use(session({
   store: new MongoStore({
     mongooseConnection: mongoose.connection,
@@ -46,6 +41,10 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000
   }
 }));
+app.use(cookieParser());
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   app.locals.currentUser = req.session.currentUser;
