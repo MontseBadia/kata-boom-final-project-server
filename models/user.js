@@ -27,6 +27,10 @@ const userSchema = new Schema({
     solution: {
       type: String
     }
+  }],
+  friends: [{
+    type: ObjectId,
+    ref: 'User'
   }]
 });
 
