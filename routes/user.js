@@ -100,4 +100,25 @@ router.post('/add/:userId', (req, res, next) => {
     .catch(next);
 });
 
+// --- GET USER FRIENDS ------
+router.get('/me/friends', (req, res, next) => {
+  const currentUserId = req.session.currentUser._id;
+
+  if (!req.session.currentUser) {
+    return res.status(401).json({ code: 'unauthorized' });
+  }
+
+  User.findById(currentUserId).populate('friends')
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ code: 'not-found' });
+      }
+      const friends = {
+        friends: user.friends
+      };
+      return res.json(friends);
+    })
+    .catch(next);
+});
+
 module.exports = router;
