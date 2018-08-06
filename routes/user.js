@@ -143,4 +143,25 @@ router.get('/me/friends', (req, res, next) => {
 //     .catch(next);
 // });
 
+// --- ADD A COMMENT TO A KATA ------
+router.post('/add/:userId/comment', (req, res, next) => {
+  const currentUserId = req.session.currentUser._id;
+  const userId = req.params.userId;
+  const comment = req.body.comment;
+  const kataId = req.body.kataId;
+
+  if (!req.session.currentUser) {
+    return res.status(401).json({ code: 'unauthorized' });
+  }
+
+  User.findOneAndUpdate({ _id: userId, 'katas.kata': kataId }, { $push: { 'katas.$.comments': { text: comment, provider: currentUserId } } })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ code: 'not-found' });
+      }
+      return res.json(user);
+    })
+    .catch(next);
+});
+
 module.exports = router;

@@ -28,7 +28,13 @@ const userSchema = new Schema({
       type: String
     },
     comments: [{
-      type: String
+      text: {
+        type: String
+      },
+      provider: {
+        type: ObjectId,
+        ref: 'User'
+      }
     }]
   }],
   friends: [{
