@@ -57,4 +57,22 @@ router.get('/me/katas', (req, res, next) => { // check kataId?
     .catch(next);
 });
 
+// --- SEARCH FOR A USER ------
+router.get('/search/:name', (req, res, next) => {
+  const userName = req.params.name;
+
+  if (!req.session.currentUser) {
+    return res.status(401).json({ code: 'unauthorized' });
+  }
+
+  User.findOne({ 'username': userName })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ code: 'not-found' });
+      }
+      return res.json(user);
+    })
+    .catch(next);
+});
+
 module.exports = router;
