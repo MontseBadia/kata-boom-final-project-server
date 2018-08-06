@@ -118,11 +118,11 @@ Kata.create(katas)
 
     const users = [
       {
-        username: 'Montse',
+        username: 'montse',
         password: bcrypt.hashSync('montse', salt).toString()
       },
       {
-        username: 'Laura',
+        username: 'sebastian',
         password: bcrypt.hashSync('laura', salt).toString()
       }
     ];
