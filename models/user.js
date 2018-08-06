@@ -26,7 +26,10 @@ const userSchema = new Schema({
     },
     solution: {
       type: String
-    }
+    },
+    comments: [{
+      type: String
+    }]
   }],
   friends: [{
     type: ObjectId,

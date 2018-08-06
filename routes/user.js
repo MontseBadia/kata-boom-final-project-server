@@ -65,7 +65,7 @@ router.get('/search/:name', (req, res, next) => {
     return res.status(401).json({ code: 'unauthorized' });
   }
 
-  User.findOne({ 'username': userName })
+  User.findOne({ 'username': userName }).populate('katas.kata')
     .then((user) => {
       if (!user) {
         return res.status(404).json({ code: 'not-found' });
