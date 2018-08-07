@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -18,7 +19,7 @@ const app = express();
 // ------ DB CONNECTION -------
 
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/kata-boom', {
+mongoose.connect(process.env.MONGODB_URI, {
   keepAlive: true,
   reconnectTries: Number.MAX_VALUE
 });
