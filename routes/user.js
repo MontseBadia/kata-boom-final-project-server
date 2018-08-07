@@ -183,4 +183,23 @@ router.get('/:userId/comments/:kataId', (req, res, next) => {
     .catch(next);
 });
 
+// --- REMOVE A COMMENT FROM A KATA ------
+router.post('/remove/:commentId', (req, res, next) => {
+  const currentUserId = req.session.currentUser._id;
+  const commentId = req.body.commentId;
+
+  if (!req.session.currentUser) {
+    return res.status(401).json({ code: 'unauthorized' });
+  }
+
+  User.findOneAndUpdate({ _id: currentUserId, 'katas.comments._id': commentId }, { $pull: { 'katas.$.comments': { _id: commentId } } })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ code: 'not-found' });
+      }
+      return res.status(204).send();
+    })
+    .catch(next);
+});
+
 module.exports = router;
