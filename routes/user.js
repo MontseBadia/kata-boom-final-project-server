@@ -164,4 +164,23 @@ router.post('/add/:userId/comment', (req, res, next) => {
     .catch(next);
 });
 
+// --- RETRIEVE COMMENTS OF A KATA ------
+router.get('/:userId/comments/:kataId', (req, res, next) => {
+  const userId = req.params.userId;
+  const kataId = req.params.kataId;
+
+  if (!req.session.currentUser) {
+    return res.status(401).json({ code: 'unauthorized' });
+  }
+
+  User.findOne({ _id: userId, 'katas._id': kataId }, { katas: { $elemMatch: { _id: kataId } } }).populate('katas.comments.provider')
+    .then((katas) => {
+      if (!katas) {
+        return res.status(404).json({ code: 'not-found' });
+      }
+      return res.json(katas);
+    })
+    .catch(next);
+});
+
 module.exports = router;
