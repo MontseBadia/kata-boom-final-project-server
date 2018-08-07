@@ -28,7 +28,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 app.use(cors({
   credentials: true,
-  origin: ['http://localhost:4200']
+  origin: [process.env.CLIENT_URL]
 }));
 app.use(session({
   store: new MongoStore({
