@@ -40,7 +40,11 @@ const userSchema = new Schema({
   friends: [{
     type: ObjectId,
     ref: 'User'
-  }]
+  }],
+  avatar: {
+    type: String,
+    default: 'http://reels.syntheticpictures.com/img/directors/blank-avatar.png'
+  }
 });
 
 const User = mongoose.model('User', userSchema);
