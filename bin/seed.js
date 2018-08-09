@@ -7,8 +7,12 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
 
-const dbName = 'kata-boom';
-mongoose.connect(`mongodb://localhost/${dbName}`);
+// const dbName = 'kata-boom';
+// mongoose.connect(`mongodb://localhost/${dbName}`);
+mongoose.connect(process.env.MONGODB_URI, {
+  keepAlive: true,
+  reconnectTries: Number.MAX_VALUE
+});
 
 User.collection.drop();
 Kata.collection.drop();
