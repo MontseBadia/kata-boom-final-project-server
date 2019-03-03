@@ -11,7 +11,8 @@ const salt = bcrypt.genSaltSync(saltRounds);
 // mongoose.connect(`mongodb://localhost/${dbName}`);
 mongoose.connect(process.env.MONGODB_URI, {
   keepAlive: true,
-  reconnectTries: Number.MAX_VALUE
+  reconnectTries: Number.MAX_VALUE,
+  useNewUrlParser: true
 });
 
 User.collection.drop();

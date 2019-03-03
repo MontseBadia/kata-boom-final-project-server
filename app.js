@@ -18,11 +18,14 @@ const app = express();
 
 // ------ DB CONNECTION -------
 
-mongoose.Promise = Promise;
-mongoose.connect(process.env.MONGODB_URI, {
+const config = {
   keepAlive: true,
-  reconnectTries: Number.MAX_VALUE
-});
+  reconnectTries: Number.MAX_VALUE,
+  useNewUrlParser: true
+};
+
+mongoose.Promise = Promise;
+mongoose.connect(process.env.MONGODB_URI, config);
 
 // ------ MIDDLEWARES -------
 
